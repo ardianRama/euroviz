@@ -42,24 +42,31 @@ function App() {
   }, [countryCode])
 
   return (
-    <div>
+    <div style={{ padding: '1rem' }}>
       <CountrySelector countries={EUROPEAN_COUNTRIES} value={countryCode} onChange={setCountryCode} />
 
       {error && <p>Something went wrong: {error}</p>}
       {!error && !stats && <p>Loading...</p>}
-      {stats && <CountryStats stats={stats} />}
 
-      <h2>Population over time</h2>
-      <TimeSeriesChart data={populationHistory} color="#3B82F6" formatValue={formatPopulation} />
+        <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', marginTop: '1rem', alignItems: 'center' }}>
+        <div style={{ flex: '1 1 350px', minWidth: '300px' }}>
+          {stats && <CountryStats stats={stats} />}
 
-      <h2>GDP per capita over time</h2>
-      <TimeSeriesChart data={gdpHistory} color="#22C55E" formatValue={formatGdpPerCapita} />
+          <h2>Population</h2>
+          <TimeSeriesChart data={populationHistory} color="#3B82F6" formatValue={formatPopulation} />
 
-      <EuropeMap
-        countries={EUROPEAN_COUNTRIES}
-        selectedCountryCode={countryCode}
-        onCountryClick={setCountryCode}
-      />
+          <h2>GDP per capita</h2>
+          <TimeSeriesChart data={gdpHistory} color="#22C55E" formatValue={formatGdpPerCapita} />
+        </div>
+
+        <div style={{ flex: '2 1 500px', minWidth: '400px' }}>
+          <EuropeMap
+            countries={EUROPEAN_COUNTRIES}
+            selectedCountryCode={countryCode}
+            onCountryClick={setCountryCode}
+          />
+        </div>
+      </div>
     </div>
   )
 }
