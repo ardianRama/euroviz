@@ -31,4 +31,9 @@ public class CountryController {
     public CountryStatsResponse getStats(@PathVariable String code) {
         return worldBankService.getCountryStats(code);
     }
+
+    @GetMapping("/{code}/gdp-per-capita")
+    public List<WorldBankDataPoint> getGdpPerCapita(@PathVariable String code) {
+        return worldBankService.getGdpPerCapita(code);
+    }
 }

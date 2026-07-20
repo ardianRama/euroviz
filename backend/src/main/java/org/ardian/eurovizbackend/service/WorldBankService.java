@@ -33,6 +33,10 @@ public class WorldBankService {
         return fetchIndicator(countryCode, POPULATION_INDICATOR);
     }
 
+    public List<WorldBankDataPoint> getGdpPerCapita(String countryCode) {
+        return fetchIndicator(countryCode, GDP_PER_CAPITA_INDICATOR);
+    }
+
     public CountryStatsResponse getCountryStats(String countryCode) {
         List<WorldBankDataPoint> population = fetchIndicator(countryCode, POPULATION_INDICATOR);
         List<WorldBankDataPoint> gdpPerCapita = fetchIndicator(countryCode, GDP_PER_CAPITA_INDICATOR);
