@@ -1,38 +1,45 @@
 import { useEffect, useState } from 'react'
-import { fetchCountryStats, fetchGdpPerCapitaHistory, fetchPopulationHistory } from '../api/countryService'
-import type { CountryStats, WorldBankDataPoint } from '../types'
+import {
+  fetchGdpPerCapitaHistory,
+  fetchLifeExpectancyHistory,
+  fetchPopulationHistory,
+} from '../api/countryService'
+import type { WorldBankDataPoint } from '../types'
 
 interface UseCountryDataResult {
-  stats: CountryStats | null
   populationHistory: WorldBankDataPoint[]
   gdpHistory: WorldBankDataPoint[]
+  lifeExpectancyHistory: WorldBankDataPoint[]
+  isLoading: boolean
   error: string | null
 }
 
 export function useCountryData(countryCode: string): UseCountryDataResult {
-  const [stats, setStats] = useState<CountryStats | null>(null)
   const [populationHistory, setPopulationHistory] = useState<WorldBankDataPoint[]>([])
   const [gdpHistory, setGdpHistory] = useState<WorldBankDataPoint[]>([])
+  const [lifeExpectancyHistory, setLifeExpectancyHistory] = useState<WorldBankDataPoint[]>([])
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    setStats(null)
     setPopulationHistory([])
     setGdpHistory([])
+    setLifeExpectancyHistory([])
     setError(null)
+    setIsLoading(true)
 
-    fetchCountryStats(countryCode)
-      .then(setStats)
+    Promise.all([
+      fetchPopulationHistory(countryCode),
+      fetchGdpPerCapitaHistory(countryCode),
+      fetchLifeExpectancyHistory(countryCode),
+    ])
+      .then(([population, gdp]) => {
+        setPopulationHistory(population)
+        setGdpHistory(gdp)
+      })
       .catch((err) => setError(err.message))
-
-    fetchPopulationHistory(countryCode)
-      .then(setPopulationHistory)
-      .catch(() => setPopulationHistory([]))
-
-    fetchGdpPerCapitaHistory(countryCode)
-      .then(setGdpHistory)
-      .catch(() => setGdpHistory([]))
+      .finally(() => setIsLoading(false))
   }, [countryCode])
 
-  return { stats, populationHistory, gdpHistory, error }
+  return { populationHistory, gdpHistory, lifeExpectancyHistory, isLoading, error }
 }

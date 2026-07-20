@@ -8,6 +8,7 @@ export interface CountryStats {
   countryName: string
   population: IndicatorValue | null
   gdpPerCapita: IndicatorValue | null
+  lifeExpectancy: IndicatorValue | null
 }
 
 export interface WorldBankDataPoint {

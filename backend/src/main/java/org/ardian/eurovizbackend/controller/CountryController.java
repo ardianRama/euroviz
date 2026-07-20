@@ -19,14 +19,12 @@ public class CountryController {
     public CountryController(WorldBankService worldBankService) {
         this.worldBankService = worldBankService;
     }
-
-    //http://localhost:8080/api/countries/swe/population
+    
     @GetMapping("/{code}/population")
     public List<WorldBankDataPoint> getPopulation(@PathVariable String code) {
         return worldBankService.getPopulation(code);
     }
 
-    //http://localhost:8080/api/countries/se/stats
     @GetMapping("/{code}/stats")
     public CountryStatsResponse getStats(@PathVariable String code) {
         return worldBankService.getCountryStats(code);
@@ -35,5 +33,10 @@ public class CountryController {
     @GetMapping("/{code}/gdp-per-capita")
     public List<WorldBankDataPoint> getGdpPerCapita(@PathVariable String code) {
         return worldBankService.getGdpPerCapita(code);
+    }
+
+    @GetMapping("/{code}/life-expectancy")
+    public List<WorldBankDataPoint> getLifeExpectancy(@PathVariable String code) {
+        return worldBankService.getLifeExpectancy(code);
     }
 }

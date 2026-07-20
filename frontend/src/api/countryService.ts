@@ -19,3 +19,8 @@ export async function fetchGdpPerCapitaHistory(countryCode: string): Promise<Wor
   const response = await apiClient.get<WorldBankDataPoint[]>(`/countries/${countryCode}/gdp-per-capita`)
   return response.data
 }
+
+export async function fetchLifeExpectancyHistory(countryCode: string): Promise<WorldBankDataPoint[]> {
+  const response = await apiClient.get<WorldBankDataPoint[]>(`/countries/${countryCode}/life-expectancy`)
+  return response.data
+}

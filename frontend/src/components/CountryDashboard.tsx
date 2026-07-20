@@ -1,24 +1,35 @@
 import CountryStats from './CountryStats'
 import TimeSeriesChart from './TimeSeriesChart'
-import { formatGdpPerCapita, formatPopulation } from '../utils/formatters'
-import type { CountryStats as CountryStatsType, WorldBankDataPoint } from '../types'
+import { formatGdpPerCapita, formatLifeExpectancy, formatPopulation } from '../utils/formatters'
+import { getLatestValue } from '../utils/timeSeries'
+import type { Country } from '../data/europeanCountries'
+import type { WorldBankDataPoint } from '../types'
 
 interface CountryDashboardProps {
-  stats: CountryStatsType | null
+  country: Country
   populationHistory: WorldBankDataPoint[]
   gdpHistory: WorldBankDataPoint[]
+  lifeExpectancyHistory: WorldBankDataPoint[]
 }
 
-function CountryDashboard({ stats, populationHistory, gdpHistory }: CountryDashboardProps) {
+function CountryDashboard({ country, populationHistory, gdpHistory, lifeExpectancyHistory }: CountryDashboardProps) {
   return (
     <div style={{ flex: '1 1 350px', minWidth: '300px' }}>
-      {stats && <CountryStats stats={stats} />}
+      <CountryStats
+        countryName={country.name}
+        population={getLatestValue(populationHistory)}
+        gdpPerCapita={getLatestValue(gdpHistory)}
+        lifeExpectancy={getLatestValue(lifeExpectancyHistory)}
+      />
 
       <h2>Population</h2>
       <TimeSeriesChart data={populationHistory} color="#3B82F6" formatValue={formatPopulation} />
 
       <h2>GDP per capita</h2>
       <TimeSeriesChart data={gdpHistory} color="#22C55E" formatValue={formatGdpPerCapita} />
+
+      <h2>Life expectancy</h2>
+      <TimeSeriesChart data={lifeExpectancyHistory} color="#F59E0B" formatValue={formatLifeExpectancy} />
     </div>
   )
 }

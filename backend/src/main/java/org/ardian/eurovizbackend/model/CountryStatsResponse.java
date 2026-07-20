@@ -4,7 +4,8 @@ public record CountryStatsResponse(
         String countryCode,
         String countryName,
         IndicatorValue population,
-        IndicatorValue gdpPerCapita
+        IndicatorValue gdpPerCapita,
+        IndicatorValue lifeExpectancy
 ) {
     public record IndicatorValue(String year, Double value) {
     }

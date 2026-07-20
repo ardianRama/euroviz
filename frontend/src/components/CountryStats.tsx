@@ -1,18 +1,24 @@
-import type { CountryStats as CountryStatsType } from '../types'
+import type { LatestValue } from '../utils/timeSeries'
 
 interface CountryStatsProps {
-  stats: CountryStatsType
+  countryName: string
+  population: LatestValue | null
+  gdpPerCapita: LatestValue | null
+  lifeExpectancy: LatestValue | null
 }
 
-function CountryStats({ stats }: CountryStatsProps) {
+function CountryStats({ countryName, population, gdpPerCapita, lifeExpectancy }: CountryStatsProps) {
   return (
     <div>
-      <h1>{stats.countryName}</h1>
+      <h1>{countryName}</h1>
       <p>
-        Population ({stats.population?.year}): {stats.population?.value.toLocaleString()}
+        Population ({population?.year}): {population?.value.toLocaleString()}
       </p>
       <p>
-        GDP per capita ({stats.gdpPerCapita?.year}): ${stats.gdpPerCapita?.value.toFixed(2)}
+        GDP per capita ({gdpPerCapita?.year}): ${gdpPerCapita?.value.toFixed(2)}
+      </p>
+      <p>
+        Life expectancy ({lifeExpectancy?.year}): {lifeExpectancy?.value.toFixed(1)} years
       </p>
     </div>
   )
