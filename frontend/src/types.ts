@@ -9,3 +9,12 @@ export interface CountryStats {
   population: IndicatorValue | null
   gdpPerCapita: IndicatorValue | null
 }
+
+export interface WorldBankDataPoint {
+  country: {
+    id: string
+    value: string
+  }
+  date: string
+  value: number | null
+}
