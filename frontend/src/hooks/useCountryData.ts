@@ -33,9 +33,10 @@ export function useCountryData(countryCode: string): UseCountryDataResult {
       fetchGdpPerCapitaHistory(countryCode),
       fetchLifeExpectancyHistory(countryCode),
     ])
-      .then(([population, gdp]) => {
+      .then(([population, gdp, lifeExpectancy]) => {
         setPopulationHistory(population)
         setGdpHistory(gdp)
+        setLifeExpectancyHistory(lifeExpectancy)
       })
       .catch((err) => setError(err.message))
       .finally(() => setIsLoading(false))
