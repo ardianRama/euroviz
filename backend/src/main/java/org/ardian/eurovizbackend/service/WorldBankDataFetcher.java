@@ -16,6 +16,7 @@ import tools.jackson.databind.type.CollectionType;
 public class WorldBankDataFetcher {
 
     private static final int MAX_RESULTS_PER_PAGE = 100;
+    private static final long RETRY_DELAY_MS = 500;
 
     private final RestClient restClient;
     private final JsonMapper jsonMapper;
@@ -31,6 +32,7 @@ public class WorldBankDataFetcher {
     }
 
     private List<WorldBankDataPoint> fetchWithRetry(String countryCode, String indicatorCode, int attemptsLeft) {
+        int attemptNumber = 3 - attemptsLeft + 1;
         try {
             String rawJson = restClient.get()
                     .uri(uriBuilder -> uriBuilder
@@ -44,10 +46,19 @@ public class WorldBankDataFetcher {
             return parseDataPoints(rawJson, countryCode);
         } catch (RuntimeException e) {
             if (attemptsLeft > 1) {
+                sleepBeforeRetry(attemptNumber);
                 return fetchWithRetry(countryCode, indicatorCode, attemptsLeft - 1);
             }
             throw new WorldBankApiException(
                     "Failed to fetch data from World Bank after multiple attempts", countryCode, e);
+        }
+    }
+
+    private void sleepBeforeRetry(int attemptNumber) {
+        try {
+            Thread.sleep(attemptNumber * RETRY_DELAY_MS); // 500ms, sedan 1000ms
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 

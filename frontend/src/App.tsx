@@ -7,7 +7,16 @@ import { useCountryData } from './hooks/useCountryData'
 
 function App() {
   const [countryCode, setCountryCode] = useState('se')
-  const { populationHistory, gdpHistory, lifeExpectancyHistory, isLoading, error } = useCountryData(countryCode)
+  const {
+    populationHistory,
+    gdpHistory,
+    lifeExpectancyHistory,
+    populationFailed,
+    gdpFailed,
+    lifeExpectancyFailed,
+    isLoading,
+    error,
+  } = useCountryData(countryCode)
 
   const selectedCountry = EUROPEAN_COUNTRIES.find((country) => country.code === countryCode)
 
@@ -25,6 +34,9 @@ function App() {
             populationHistory={populationHistory}
             gdpHistory={gdpHistory}
             lifeExpectancyHistory={lifeExpectancyHistory}
+            populationFailed={populationFailed}
+            gdpFailed={gdpFailed}
+            lifeExpectancyFailed={lifeExpectancyFailed}
           />
         )}
 

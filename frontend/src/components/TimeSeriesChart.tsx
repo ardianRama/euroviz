@@ -5,6 +5,7 @@ interface TimeSeriesChartProps {
   data: WorldBankDataPoint[]
   color: string
   formatValue: (value: number) => string
+  hasError?: boolean
 }
 
 interface ChartPoint {
@@ -14,12 +15,10 @@ interface ChartPoint {
 
 function getDecadeTicks(chartData: ChartPoint[]): number[] {
   if (chartData.length === 0) return []
-
   const years = chartData.map((point) => point.year)
   const minYear = Math.min(...years)
   const maxYear = Math.max(...years)
   const firstDecade = Math.ceil(minYear / 10) * 10
-
   const ticks: number[] = []
   for (let year = firstDecade; year <= maxYear; year += 10) {
     ticks.push(year)
@@ -27,14 +26,14 @@ function getDecadeTicks(chartData: ChartPoint[]): number[] {
   return ticks
 }
 
-function TimeSeriesChart({ data, color, formatValue }: TimeSeriesChartProps) {
+function TimeSeriesChart({ data, color, formatValue, hasError }: TimeSeriesChartProps) {
   const chartData: ChartPoint[] = data
     .filter((point) => point.value !== null)
     .map((point) => ({ year: Number(point.date), value: point.value as number }))
     .sort((a, b) => a.year - b.year)
 
   if (chartData.length === 0) {
-    return <p>No data available.</p>
+    return <p>{hasError ? 'Could not load this data — try again soon.' : 'No data available.'}</p>
   }
 
   return (
@@ -49,5 +48,4 @@ function TimeSeriesChart({ data, color, formatValue }: TimeSeriesChartProps) {
     </ResponsiveContainer>
   )
 }
-
 export default TimeSeriesChart
