@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import CountrySelector from './components/CountrySelector'
 import CountryStats from './components/CountryStats'
 import { EUROPEAN_COUNTRIES } from './data/europeanCountries'
+import { fetchCountryStats } from './api/countryService'
 import type { CountryStats as CountryStatsType } from './types'
 
 function App() {
@@ -13,14 +14,8 @@ function App() {
     setStats(null)
     setError(null)
 
-    fetch(`http://localhost:8080/api/countries/${countryCode}/stats`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Request failed with status ${res.status}`)
-        }
-        return res.json()
-      })
-      .then((data: CountryStatsType) => setStats(data))
+    fetchCountryStats(countryCode)
+      .then(setStats)
       .catch((err) => setError(err.message))
   }, [countryCode])
 
