@@ -27,7 +27,7 @@ public class WorldBankClientConfig {
                 .build();
 
         JdkClientHttpRequestFactory requestFactory = new JdkClientHttpRequestFactory(httpClient);
-        requestFactory.setReadTimeout(Duration.ofSeconds(15));
+        requestFactory.setReadTimeout(Duration.ofSeconds(6));
 
         return restClientBuilder
                 .baseUrl(worldBankBaseUrl)

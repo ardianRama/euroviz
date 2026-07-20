@@ -28,11 +28,10 @@ public class WorldBankDataFetcher {
 
     @Cacheable("worldBankData")
     public List<WorldBankDataPoint> fetchIndicator(String countryCode, String indicatorCode) {
-        return fetchWithRetry(countryCode, indicatorCode, 3);
+        return fetchWithRetry(countryCode, indicatorCode, 2);
     }
 
     private List<WorldBankDataPoint> fetchWithRetry(String countryCode, String indicatorCode, int attemptsLeft) {
-        int attemptNumber = 3 - attemptsLeft + 1;
         try {
             String rawJson = restClient.get()
                     .uri(uriBuilder -> uriBuilder
@@ -46,7 +45,7 @@ public class WorldBankDataFetcher {
             return parseDataPoints(rawJson, countryCode);
         } catch (RuntimeException e) {
             if (attemptsLeft > 1) {
-                sleepBeforeRetry(attemptNumber);
+                sleepBeforeRetry();
                 return fetchWithRetry(countryCode, indicatorCode, attemptsLeft - 1);
             }
             throw new WorldBankApiException(
@@ -54,9 +53,9 @@ public class WorldBankDataFetcher {
         }
     }
 
-    private void sleepBeforeRetry(int attemptNumber) {
+    private void sleepBeforeRetry() {
         try {
-            Thread.sleep(attemptNumber * RETRY_DELAY_MS); // 500ms, sedan 1000ms
+            Thread.sleep(RETRY_DELAY_MS);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

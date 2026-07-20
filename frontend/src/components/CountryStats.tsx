@@ -9,8 +9,8 @@ interface CountryStatsProps {
 
 function CountryStats({ countryName, population, gdpPerCapita, lifeExpectancy }: CountryStatsProps) {
   return (
-    <div>
-      <h1>{countryName}</h1>
+    <div style={{ marginBottom: '1.5rem' }}>
+      <h1 style={{ lineHeight: 1.2, marginBottom: '0.5rem' }}>{countryName}</h1>
       <p>
         Population ({population?.year}): {population?.value.toLocaleString()}
       </p>
