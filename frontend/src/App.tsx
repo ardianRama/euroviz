@@ -48,7 +48,7 @@ function App() {
       {error && <p>Something went wrong: {error}</p>}
       {!error && !stats && <p>Loading...</p>}
 
-        <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', marginTop: '1rem', alignItems: 'center' }}>
+      <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', marginTop: '1rem', alignItems: 'center' }}>
         <div style={{ flex: '1 1 350px', minWidth: '300px' }}>
           {stats && <CountryStats stats={stats} />}
 
@@ -59,7 +59,7 @@ function App() {
           <TimeSeriesChart data={gdpHistory} color="#22C55E" formatValue={formatGdpPerCapita} />
         </div>
 
-        <div style={{ flex: '2 1 500px', minWidth: '400px' }}>
+        <div style={{ flex: '3 1 600px', minWidth: '500px' }}>
           <EuropeMap
             countries={EUROPEAN_COUNTRIES}
             selectedCountryCode={countryCode}
