@@ -1,33 +1,12 @@
 import { useEffect, useState } from 'react'
-
-interface IndicatorValue {
-  year: string
-  value: number
-}
-
-interface CountryStats {
-  countryCode: string
-  countryName: string
-  population: IndicatorValue | null
-  gdpPerCapita: IndicatorValue | null
-}
-
-const EUROPEAN_COUNTRIES = [
-  { code: 'se', name: 'Sweden' },
-  { code: 'no', name: 'Norway' },
-  { code: 'dk', name: 'Denmark' },
-  { code: 'fi', name: 'Finland' },
-  { code: 'de', name: 'Germany' },
-  { code: 'fr', name: 'France' },
-  { code: 'gb', name: 'United Kingdom' },
-  { code: 'es', name: 'Spain' },
-  { code: 'it', name: 'Italy' },
-  { code: 'pl', name: 'Poland' },
-]
+import CountrySelector from './components/CountrySelector'
+import CountryStats from './components/CountryStats'
+import { EUROPEAN_COUNTRIES } from './data/europeanCountries'
+import type { CountryStats as CountryStatsType } from './types'
 
 function App() {
   const [countryCode, setCountryCode] = useState('se')
-  const [stats, setStats] = useState<CountryStats | null>(null)
+  const [stats, setStats] = useState<CountryStatsType | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -41,34 +20,17 @@ function App() {
         }
         return res.json()
       })
-      .then((data: CountryStats) => setStats(data))
+      .then((data: CountryStatsType) => setStats(data))
       .catch((err) => setError(err.message))
   }, [countryCode])
 
   return (
     <div>
-      <select value={countryCode} onChange={(e) => setCountryCode(e.target.value)}>
-        {EUROPEAN_COUNTRIES.map((country) => (
-          <option key={country.code} value={country.code}>
-            {country.name}
-          </option>
-        ))}
-      </select>
+      <CountrySelector countries={EUROPEAN_COUNTRIES} value={countryCode} onChange={setCountryCode} />
 
       {error && <p>Something went wrong: {error}</p>}
       {!error && !stats && <p>Loading...</p>}
-
-      {stats && (
-        <div>
-          <h1>{stats.countryName}</h1>
-          <p>
-            Population ({stats.population?.year}): {stats.population?.value.toLocaleString()}
-          </p>
-          <p>
-            GDP per capita ({stats.gdpPerCapita?.year}): ${stats.gdpPerCapita?.value.toFixed(2)}
-          </p>
-        </div>
-      )}
+      {stats && <CountryStats stats={stats} />}
     </div>
   )
 }
