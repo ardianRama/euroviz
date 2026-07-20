@@ -41,7 +41,7 @@ function TimeSeriesChart({ data, color, formatValue, hasError }: TimeSeriesChart
       <LineChart data={chartData} margin={{ top: 10, right: 20, left: 10, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="year" type="number" domain={['dataMin', 'dataMax']} ticks={getDecadeTicks(chartData)} />
-        <YAxis tickFormatter={formatValue} width={60} />
+        <YAxis tickFormatter={formatValue} width={80} />
         <Tooltip formatter={(value) => formatValue(Number(value))} />
         <Line type="monotone" dataKey="value" stroke={color} strokeWidth={2} dot={false} />
       </LineChart>
