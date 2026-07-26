@@ -2,7 +2,6 @@ package org.ardian.eurovizbackend.controller;
 
 import java.util.List;
 
-import org.ardian.eurovizbackend.model.CountryStatsResponse;
 import org.ardian.eurovizbackend.model.WorldBankDataPoint;
 import org.ardian.eurovizbackend.service.WorldBankService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +22,6 @@ public class CountryController {
     @GetMapping("/{code}/population")
     public List<WorldBankDataPoint> getPopulation(@PathVariable String code) {
         return worldBankService.getPopulation(code);
-    }
-
-    @GetMapping("/{code}/stats")
-    public CountryStatsResponse getStats(@PathVariable String code) {
-        return worldBankService.getCountryStats(code);
     }
 
     @GetMapping("/{code}/gdp-per-capita")
