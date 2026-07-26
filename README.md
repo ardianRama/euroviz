@@ -10,6 +10,8 @@ An interactive map of Europe for exploring population, GDP per capita and life e
 
 **🔗 Live demo:** https://euroviz.onrender.com
 
+![EuroViz screenshot](screenshots/screenshot.png)
+
 > **💡 Note:** The backend runs on a free instance and spins down after periods of inactivity — the first request after a while may take up to a minute to respond while it wakes up.
 
 ---
@@ -111,3 +113,4 @@ All data comes from the [World Bank Indicators API](https://datahelpdesk.worldba
 ## License
 
 MIT © Ardian Rama
+
