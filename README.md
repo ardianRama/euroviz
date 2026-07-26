@@ -4,6 +4,7 @@
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.x-brightgreen?logo=springboot)](https://img.shields.io/badge/Spring%20Boot-4.x-brightgreen?logo=springboot)
 [![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://img.shields.io/badge/React-19-blue?logo=react)
 [![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript)](https://img.shields.io/badge/TypeScript-blue?logo=typescript)
+[![Vite](https://img.shields.io/badge/Vite-blue?logo=vite)](https://img.shields.io/badge/Vite-blue?logo=vite)
 [![Docker](https://img.shields.io/badge/Docker-required-blue?logo=docker)](https://img.shields.io/badge/Docker-required-blue?logo=docker)
 
 An interactive map of Europe for exploring population, GDP per capita and life expectancy data, powered by the World Bank API.
