@@ -2,7 +2,7 @@ import axios from 'axios'
 import type { WorldBankDataPoint } from '../types'
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? 'http://localhost:8080/api',
 })
 
 export async function fetchPopulationHistory(countryCode: string): Promise<WorldBankDataPoint[]> {
