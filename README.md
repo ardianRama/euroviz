@@ -12,7 +12,7 @@ An interactive map of Europe for exploring population, GDP per capita and life e
 
 <img src="screenshots/screenshot.png" alt="EuroViz screenshot" width="700">
 
-> **💡 Note:** The backend runs on a free instance and spins down after periods of inactivity — the first request after a while may take up to a minute to respond while it wakes up.
+> **💡 Note:** This app uses Render's free tier for the backend. If it has been inactive for a while, the first request may take up to a minute as the server wakes up.
 
 ---
 
